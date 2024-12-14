@@ -1,25 +1,25 @@
 {
-  "name": "canvas-video-downloader",
+  "name": "nextjs-vercel-app",
   "version": "1.0.0",
-  "main": "index.js",
+  "private": true,
   "scripts": {
-    "dev": "vercel dev"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
-    "ytdl-core": "^4.11.0"
+    "next": "^13.0.0", // Adjust the version as needed
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "ytdl-core": "^4.11.0" // Latest version as of this writing
+  },
+  "devDependencies": {
+    "eslint": "latest",
+    "eslint-config-next": "latest"
+  },
+  "engines": {
+    "node": "16.x", // Match the Node.js version supported by Vercel
+    "npm": "8.x" // Optional: Specify npm version if necessary
   }
-
-"scripts": {
-  "dev": "next dev",
-  "build": "next build",
-  "start": "next start"
 }
-  "dependencies": {
-    "next": "^16.0.0",  // or the version you're using
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0"
-  }
-}
-
-  
-
