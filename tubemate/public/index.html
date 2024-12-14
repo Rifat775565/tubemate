@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas Video Downloader</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        header {
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            width: 300px;
+            padding: 10px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .video-info {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .video-info img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Canvas Video Downloader</h1>
+    </header>
+    <main>
+        <div>
+            <input type="text" id="videoUrl" placeholder="Enter YouTube Video URL">
+            <button onclick="fetchVideoDetails()">Fetch Video</button>
+        </div>
+        <div class="video-info" id="videoInfo"></div>
+    </main>
+
+    <script>
+        async function fetchVideoDetails() {
+            const videoUrl = document.getElementById('videoUrl').value;
+            if (!videoUrl) {
+                alert('Please enter a YouTube video URL.');
+                return;
+            }
+
+            const videoId = extractVideoId(videoUrl);
+            if (!videoId) {
+                alert('Invalid YouTube URL.');
+                return;
+            }
+
+            const videoInfoDiv = document.getElementById('videoInfo');
+            videoInfoDiv.innerHTML = '<p>Fetching video details...</p>';
+
+            try {
+                const response = await fetch(`/api/download?url=${encodeURIComponent(videoUrl)}`);
+                if (response.status !== 200) {
+                    const errorText = await response.text();
+                    throw new Error(errorText);
+                }
+
+                videoInfoDiv.innerHTML = `
+                    <h2>Ready to Download</h2>
+                    <a href="/api/download?url=${encodeURIComponent(videoUrl)}" download>Click here to download</a>
+                `;
+            } catch (error) {
+                console.error('Error fetching video details:', error);
+                videoInfoDiv.innerHTML = '<p>Error fetching video details. Please try again later.</p>';
+            }
+        }
+
+        function extractVideoId(url) {
+            try {
+                const urlParams = new URLSearchParams(new URL(url).search);
+                return urlParams.get('v');
+            } catch {
+                return null;
+            }
+        }
+    </script>
+</body>
+</html>
