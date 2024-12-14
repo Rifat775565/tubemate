@@ -3,6 +3,7 @@
   "public": "public",
   "functions": {
     "api/**/*.js": {
+      "runtime": "nodejs18.x",
       "memory": 128,
       "maxDuration": 10
     }
