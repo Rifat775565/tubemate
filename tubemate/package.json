@@ -19,7 +19,7 @@
     "eslint-config-next": "latest"
   },
   "engines": {
-    "node": "16.x", // Match the Node.js version supported by Vercel
+    "node": "22.x", // Match the Node.js version supported by Vercel
     "npm": "8.x" // Optional: Specify npm version if necessary
   }{
   "packageManager": "pnpm@7.5.1"
